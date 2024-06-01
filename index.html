@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenjikeuhh</title>
+    <style>
+        body {
+            background-color: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100vh;
+        }
+
+        .bubble {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.6);
+            width: 1px;
+            height: 1px;
+            border-radius: 50%;
+            animation: bubbleAnimation linear infinite;
+        }
+
+        @keyframes bubbleAnimation {
+            0% {
+                transform: translateY(0) scale(5);
+            }
+            50% {
+                transform: translateY(-100px) scale(1.2);
+            }
+            100% {
+                transform: translateY(-200px) scale(1);
+            }
+        }
+
+        #kenjikeuhh-text {
+            font-size: 60px;
+            font-weight: bold;
+            text-align: center;
+            opacity: 0;
+            animation: fade-in-out 4s ease-out forwards;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        @keyframes fade-in-out {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .top-buttons, .search-container, .socials {
+            position: absolute;
+            top: 0%;
+            left: 50%;
+            margin-top: 2%;
+            margin-left: 0%;
+            transform: translate(-50%, -50%);
+        }
+
+        .top-buttons {
+            display: none;
+            z-index: 1;
+        }
+
+        .top-left-image {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: none;
+            z-index: 1;
+        }
+
+        .top-right-image {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: none;
+            z-index: 1;
+        }
+
+        .button {
+            background: transparent;
+            border: 0.5px solid white;
+            border-radius: 15px;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .button:hover {
+            font-size: 22px;
+        }
+        .search-box {
+            padding: 10px;
+            font-size: 18px;
+            border: 0.5px solid white;
+            border-radius: 15px;
+            background-color: transparent;
+            color: white;
+            width: 300px;
+            margin-top: 275%;
+            margin-left: 0%;
+        }
+        .random-text {
+            margin-top: 35%;
+            margin-left: 33.5%;
+
+            padding: 10px;
+            font-size: 18px;
+            border: 0.5px solid white;
+            border-radius: 15px;
+            text-align: center;
+            background-color: transparent;
+            color: white;
+            width: 600px;
+        }
+        .socials h2 {
+            margin-bottom: 20px;
+        }
+        .socials .social-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 200%;
+            margin-left: 0%;
+        }
+        .socials .social-button {
+            background: transparent;
+            border: 0.5px solid white;
+            border-radius: 15px;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .socials .social-button:hover {
+            font-size: 22px;
+        }
+    </style>
+    <script>
+        function showSocials() {
+            document.getElementById('socials').style.display = 'block';
+            document.getElementById('search-container').style.display = 'none';
+        }
+
+        function showSearchContainer() {
+            document.getElementById('socials').style.display = 'none';
+            document.getElementById('search-container').style.display = 'block';
+            document.getElementById('search-box').focus();
+        }
+
+        function createBubbles() {
+            var numBubbles = 50;
+            var container = document.body;
+            var colors = ['#FFFFFF', '#F0F8FF', '#ADD8E6', '#B0E0E6'];
+
+            for (var i = 0; i < numBubbles; i++) {
+                var bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                bubble.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                bubble.style.left = Math.random() * window.innerWidth + 'px';
+                bubble.style.animationDuration = (Math.random() * 5 + 3) + 's';
+                bubble.style.width = Math.random() * 30 + 'px';
+                bubble.style.height = bubble.style.width;
+                container.appendChild(bubble);
+
+                bubble.addEventListener('animationiteration', function() {
+                    container.removeChild(this);
+                });
+            }
+        }
+
+        function searchGoogle(event) {
+            if (event.keyCode === 13) {
+                var searchText = document.getElementById('search-box').value;
+                window.location.href = 'https://www.google.com/search?q=' + encodeURIComponent(searchText);
+            }
+        }
+
+        function setRandomText() {
+            var randomTexts = ["Welcome to Kenjikeuhh's site!", "Hey google, Open Kenjikeuhh.com (i want that domain so bad)", "Please donate to me so i can buy Kenjikeuhh.com"];
+            var randomText = randomTexts[Math.floor(Math.random() * randomTexts.length)];
+            document.getElementById('random-text').innerText = randomText;
+        }
+
+        window.onload = function() {
+            var kenjikeuhhText = document.getElementById('kenjikeuhh-text');
+            setTimeout(function() {
+                kenjikeuhhText.style.animation = 'none';
+                kenjikeuhhText.style.opacity = 0;
+                document.getElementsByClassName('top-buttons')[0].style.display = 'block';
+                document.getElementsByClassName('top-left-image')[0].style.display = 'block';
+                document.getElementsByClassName('top-right-image')[0].style.display = 'block';
+                showSearchContainer();
+                setRandomText();
+            }, 4000);
+        }
+    </script>
+</head>
+<body>
+    <div id="kenjikeuhh-text">
+        Kenjikeuhh &#169;
+    </div>
+    <div class="top-buttons">
+        <a href="javascript:void(0);" class="button" onclick="showSearchContainer()">Search Google</a>
+        <a href="javascript:void(0);" class="button" onclick="showSocials()">Socials</a>
+    </div>
+    <div class="top-left-image">
+        <img src="https://github.com/Soughtless/Kenjikeuhh/blob/main/Nieuw%20project.png?raw=true" alt="Kenjikeuhh Logo" width="150">
+    </div>
+    <div class="top-right-image">
+    </div>
+    <div class="search-container" id="search-container" style="display: none;">
+        <input type="text" id="search-box" class="search-box" placeholder="Search Google" onkeypress="searchGoogle(event)">
+    </div>
+    <div class="socials" id="socials" style="display: none;">
+        <h2>Socials</h2>
+        <div class="social-buttons">
+            <a href="https://github.com/Soughtless" class="social-button">GitHub</a>
+            <a href="https://discord.gg/uYvYe8ZmB8" class="social-button">Discord</a>
+            <a href="https://www.tiktok.com/@privateuserttv" class="social-button">TikTok</a>
+            <a href="https://www.roblox.com/users/3016280906/profile" class="social-button">Roblox</a>
+        </div>
+    </div>
+    <div id="random-text" class="random-text"></div>
+</body>
+</html>
